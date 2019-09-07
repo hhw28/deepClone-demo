@@ -2,7 +2,7 @@ const chai = require("chai");
 const deepClone = require("../src/index");
 const assert = chai.assert;
 
-describe("chai的使用", () => {
+describe("深拷贝", () => {
   it("deepClone是个函数", () => {
     assert.isFunction(deepClone);
   });
@@ -54,6 +54,15 @@ describe("chai的使用", () => {
       assert(a.xxx.yyy !== a2.xxx.yyy);
       assert(a.xxx !== a2.xxx);
       assert(a() === a2());
+    });
+    it("能够复制环", () => {
+      const a = { name: "haha" };
+      a.self = a;
+      const a2 = deepClone(a);
+      assert(a !== a2);
+      assert(a.name === a2.name);
+      assert(a.self !== a2.self);
+      assert(a.self.name === a2.self.name);
     });
   });
 });
