@@ -99,5 +99,15 @@ describe("深拷贝", () => {
       assert(a.xxx.yyy !== a2.xxx.yyy);
       assert(a.xxx !== a2.xxx);
     });
+    it("自动跳过原型", () => {
+      const a = Object.create({ name: "haha" });
+      a.xxx = { yyy: { zzz: 1 } };
+      const a2 = deepClone(a);
+      assert.isFalse("name" in a2);
+      assert(a !== a2);
+      assert(a.xxx.yyy.zzz === a2.xxx.yyy.zzz);
+      assert(a.xxx.yyy !== a2.xxx.yyy);
+      assert(a.xxx !== a2.xxx);
+    });
   });
 });
